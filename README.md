@@ -11,7 +11,7 @@ AI-Thinker module Ra-02:
  - Supply Voltage default 3.3V
 
 Arduino boad or compatible
- - This boad is 3,3V and not 5V so to use Arduino Uno or Arduino Pro Mini 5V you have to use a Bi-Directional Logic Level Converter.
+ - This boad is 3,3V level and not 5V so to use Arduino Uno or Arduino Pro Mini 5V you have to use a Bi-Directional Logic Level Converter.
 
  Wiring example with Arduino Pro Mini 3,3V 8MHz
 	
