@@ -5,15 +5,16 @@ This example code is based on RadioHead library so you will need to download the
 You can do that by visiting the [AirSpayce's Radiohead site](http://www.airspayce.com/mikem/arduino/RadioHead/)
 
 AI-Thinker module Ra-02:
- Semtech SX1278 low power long range transceiver
- 433MHz frequency (420 to 450 MHz range)
- SPI communication
- Supply Voltage default 3.3V
+ - Semtech SX1278 low power long range transceiver
+ - 433MHz frequency (420 to 450 MHz range)
+ - SPI communication
+ - Supply Voltage default 3.3V
 
 Arduino boad or compatible
- This boad is 3,3V and not 5V so to use Arduino Uno or Arduino Pro Mini 5V you have to use a Bi-Directional Logic Level Converter.
+ - This boad is 3,3V and not 5V so to use Arduino Uno or Arduino Pro Mini 5V you have to use a Bi-Directional Logic Level Converter.
 
  Wiring example with Arduino Pro Mini 3,3V 8MHz
+	
  ![wiring_img](./wiring.png)
  
  Developed by Rui Silva, Porto, Portugal
