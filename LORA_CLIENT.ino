@@ -44,7 +44,6 @@ void setup()
     Serial.println("LoRa radio init failed");
     while (1);
   }
-  Serial.println("LoRa radio init OK!");
 
   // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM
   if (!rf95.setFrequency(RF95_FREQ)) {
@@ -58,19 +57,17 @@ void setup()
   // If you are using RFM95/96/97/98 modules which uses the PA_BOOST transmitter pin, then 
   // you can set transmitter powers from 5 to 23 dBm:
   rf95.setTxPower(23, false);
-  Serial.print("START");
+  Serial.println("START");
 }
+    
+uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];    
+uint8_t len = sizeof(buf);
 
 void loop()
 {
-  if (rf95.available())
-  {
-    // Should be a message for us now   
-    uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
-    uint8_t len = sizeof(buf);
+  if (rf95.available()){    
     
-    if (rf95.recv(buf, &len))
-    {
+    if (rf95.recv(buf, &len)){
       digitalWrite(LED, HIGH);
       //RH_RF95::printBuffer("Got: ", buf, len);
       Serial.print("Received:  ");
@@ -78,7 +75,8 @@ void loop()
       //Serial.print("RSSI: ");
       //Serial.println(rf95.lastRssi(), DEC);
       if (strcmp("INF",((char*)buf)) == 0){
-        Serial.print("Received data request INF");
+        Serial.println("Received data request INF");
+        delay(2000);
         Serial.println("Send mens: DATA ARDUINO");
         uint8_t data[] = "DATA ARDUINO";
         rf95.send(data, sizeof(data));
