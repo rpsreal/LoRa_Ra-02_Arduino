@@ -4,6 +4,8 @@ Use Ra-02 LoRa module with Arduino
 This example code is based on RadioHead library so you will need to download the RadioHead library. 
 You can do that by visiting the [AirSpayce's Radiohead site](http://www.airspayce.com/mikem/arduino/RadioHead/)
 
+These examples can be used to communicate with Raspberry Pi through python using examples from this library [rpsreal/pySX127x](https://github.com/rpsreal/pySX127x)
+
 AI-Thinker module Ra-02:
  - Semtech SX1278 low power long range transceiver
  - 433MHz frequency (420 to 450 MHz range)
