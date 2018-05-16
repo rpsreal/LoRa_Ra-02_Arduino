@@ -30,8 +30,6 @@ void setup()
   Serial.begin(9600);
   delay(100);
 
-  Serial.println("Arduino LoRa TX Test!");
-
   // manual reset
   digitalWrite(RFM95_RST, LOW);
   delay(10);
@@ -49,7 +47,6 @@ void setup()
     Serial.println("setFrequency failed");
     while (1);
   }
-  Serial.print("Set Freq to: "); Serial.println(RF95_FREQ);
   
   // Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
 
@@ -57,6 +54,7 @@ void setup()
   // If you are using RFM95/96/97/98 modules which uses the PA_BOOST transmitter pin, then 
   // you can set transmitter powers from 5 to 23 dBm:
   rf95.setTxPower(23, false);
+  Serial.print("START");
 }
 
 int8_t send_ack=0; // flag var
