@@ -79,7 +79,7 @@ void loop()
         delay(2000);
         Serial.println("Send mens: DATA ARDUINO");
         uint8_t data[] = "DATA ARDUINO";
-        rf95.send(data, sizeof(data));
+        rf95.send(data, 13); //sizeof(data)
         rf95.waitPacketSent();
       }
       digitalWrite(LED, LOW);
