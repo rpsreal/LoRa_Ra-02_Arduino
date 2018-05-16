@@ -15,6 +15,8 @@
 #define RFM95_RST 9
 #define RFM95_INT 2
 
+// Blinky on receipt
+#define LED 13
 // Change to 434.0 or other frequency, must match RX's freq!
 #define RF95_FREQ 434.0
 
@@ -40,7 +42,6 @@ void setup()
     Serial.println("LoRa radio init failed");
     while (1);
   }
-  Serial.println("LoRa radio init OK!");
 
   // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM
   if (!rf95.setFrequency(RF95_FREQ)) {
@@ -54,7 +55,7 @@ void setup()
   // If you are using RFM95/96/97/98 modules which uses the PA_BOOST transmitter pin, then 
   // you can set transmitter powers from 5 to 23 dBm:
   rf95.setTxPower(23, false);
-  Serial.print("START");
+  Serial.println("START");
 }
 
 int8_t send_ack=0; // flag var
@@ -72,7 +73,7 @@ void loop()
 
     uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
     uint8_t len = sizeof(buf);
-    if (rf95.waitAvailableTimeout(1000)){ 
+    if (rf95.waitAvailableTimeout(10000)){ 
       if (rf95.recv(buf, &len)){
          Serial.print("Receive: ");
          Serial.println((char*)buf);
@@ -88,6 +89,7 @@ void loop()
    }
   
   if(send_ack==1){ //Send: ACK
+    delay(1000);
     Serial.println("Send: ACK");
     char radiopacket[4] = "ACK";
     rf95.send((uint8_t *)radiopacket,4);
