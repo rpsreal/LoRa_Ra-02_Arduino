@@ -1,3 +1,5 @@
+// This program sends a response whenever it receives the "INF" mens
+//
 // Arduino9x_RX
 // -*- mode: C++ -*-
 // Example sketch showing how to create a simple messaging client (receiver)
@@ -72,17 +74,18 @@ void loop()
     if (rf95.recv(buf, &len))
     {
       digitalWrite(LED, HIGH);
-      RH_RF95::printBuffer("Received: ", buf, len);
-      Serial.print("Got: ");
+      //RH_RF95::printBuffer("Got: ", buf, len);
+      Serial.print("Received:  ");
       Serial.println((char*)buf);
-       Serial.print("RSSI: ");
-      Serial.println(rf95.lastRssi(), DEC);
-      
-      // Send a reply
-      uint8_t data[] = "And hello back to you";
-      rf95.send(data, sizeof(data));
-      rf95.waitPacketSent();
-      Serial.println("Sent a reply");
+      //Serial.print("RSSI: ");
+      //Serial.println(rf95.lastRssi(), DEC);
+      if (strcmp("INF",((char*)buf)) == 0){
+        Serial.print("Received data request INF");
+        Serial.println("Send mens: DATA ARDUINO");
+        uint8_t data[] = "DATA ARDUINO";
+        rf95.send(data, sizeof(data));
+        rf95.waitPacketSent();
+      }
       digitalWrite(LED, LOW);
     }
     else
