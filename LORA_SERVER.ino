@@ -65,8 +65,8 @@ void loop()
   while (send_ack==0){
     digitalWrite(LED, HIGH);
     Serial.println("Send: INF");
-    char radiopacket[3] = "INF";
-    rf95.send((uint8_t *)radiopacket, 3);
+    char radiopacket[4] = "INF";
+    rf95.send((uint8_t *)radiopacket, 4);
     delay(10);
     rf95.waitPacketSent();
 
@@ -84,12 +84,13 @@ void loop()
       }
     }else{
          Serial.println("Send INF again");
+    }
    }
   
   if(send_ack==1){ //Send: ACK
     Serial.println("Send: ACK");
-    char radiopacket[3] = "ACK";
-    rf95.send((uint8_t *)radiopacket, 3);
+    char radiopacket[4] = "ACK";
+    rf95.send((uint8_t *)radiopacket,4);
     delay(10);
     rf95.waitPacketSent();
     send_ack=0;
