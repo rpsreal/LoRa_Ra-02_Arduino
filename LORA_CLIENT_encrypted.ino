@@ -1,15 +1,17 @@
 // This program sends a response whenever it receives the "INF" mens
 //
-// Copyright 2018 Rui Silva.
-// This file is part of rpsreal/LoRa_Ra-02_Arduino
-// Based on example Arduino9x_RX RADIOHEAD library
-// It is designed to work with LORA_SERVER
+// Arduino9x_RX
+// -*- mode: C++ -*-
+// Example sketch showing how to create a simple messaging client (receiver)
+// with the RH_RF95 class. RH_RF95 class does not provide for addressing or
+// reliability, so you should only use RH_RF95 if you do not need the higher
+// level messaging abilities.
+// It is designed to work with the other example Arduino9x_TX
 
-#include <SPI.h>
-#include <RH_RF95.h>
-#include <Base64.h>
-#include <AESLib.h>
-
+#include <SPI.h>      // SPI
+#include <RH_RF95.h>  // HadioHead
+#include <Base64.h> // https://github.com/adamvr/arduino-base64
+#include <AESLib.h> // https://github.com/DavyLandman/AESLib
 
 #define RFM95_CS 10
 #define RFM95_RST 9
@@ -62,6 +64,7 @@ void setup()
     
 uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];    
 uint8_t len = sizeof(buf);
+uint8_t key[] = "1234567890123456";
 
 void loop()
 {
@@ -74,13 +77,39 @@ void loop()
       Serial.println((char*)buf);
       //Serial.print("RSSI: ");
       //Serial.println(rf95.lastRssi(), DEC);
-      if (strcmp("INF",((char*)buf)) == 0){
+
+
+      uint8_t buf[] = "9Z6vjGK3WKkOc7LzpAVXOQ==";
+      
+      uint8_t bufLen = sizeof(buf);
+      uint8_t decodedLen = base64_dec_len((char*)buf, bufLen);
+      uint8_t data_de[decodedLen];
+      base64_decode((char*)data_de, (char*)buf, bufLen);
+
+      aes128_dec_single(key, data_de);
+      Serial.print("recebido isto:");
+      Serial.println((char*)data_de);
+
+      
+      if (strcmp("INF             ",((char*)data_de)) == 0){
+
         Serial.println("Received data request INF");
         delay(2000);
         Serial.println("Send mens: DATA ARDUINO");
-        uint8_t data[] = "DATA ARDUINO";
-        rf95.send(data, 13); //sizeof(data)
+
+        uint8_t input[] = "DATA ARDUINO   ";
+       
+        aes128_enc_single(key, input);
+        Serial.print("encrypted:");
+
+        uint8_t  inputLen = sizeof(input);
+        uint8_t  encodedLen = base64_enc_len(inputLen);
+        uint8_t  encoded[encodedLen];
+        base64_encode((char*)encoded, (char*)input, inputLen);
+        
+        rf95.send(encoded, sizeof(encoded)+1);
         rf95.waitPacketSent();
+        Serial.print("Send");
       }
       digitalWrite(LED, LOW);
     }
