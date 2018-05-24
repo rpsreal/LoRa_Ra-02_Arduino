@@ -73,13 +73,10 @@ void loop()
     if (rf95.recv(buf, &len)){
       digitalWrite(LED, HIGH);
       //RH_RF95::printBuffer("Got: ", buf, len);
-      Serial.print("Received:  ");
-      Serial.println((char*)buf);
       //Serial.print("RSSI: ");
       //Serial.println(rf95.lastRssi(), DEC);
-
-
-      uint8_t buf[] = "9Z6vjGK3WKkOc7LzpAVXOQ==";
+      Serial.print("== RECEIVED:  ");
+      Serial.print((char*)buf);
       
       uint8_t bufLen = sizeof(buf);
       uint8_t decodedLen = base64_dec_len((char*)buf, bufLen);
@@ -87,20 +84,17 @@ void loop()
       base64_decode((char*)data_de, (char*)buf, bufLen);
 
       aes128_dec_single(key, data_de);
-      Serial.print("recebido isto:");
+      Serial.print("  |  Decoded: ");
       Serial.println((char*)data_de);
 
       
       if (strcmp("INF             ",((char*)data_de)) == 0){
-
-        Serial.println("Received data request INF");
+        Serial.println("Received data request INF - going to send mens:DATA ARDUINO   ");
         delay(2000);
-        Serial.println("Send mens: DATA ARDUINO");
 
         uint8_t input[] = "DATA ARDUINO   ";
        
         aes128_enc_single(key, input);
-        Serial.print("encrypted:");
 
         uint8_t  inputLen = sizeof(input);
         uint8_t  encodedLen = base64_enc_len(inputLen);
@@ -109,7 +103,10 @@ void loop()
         
         rf95.send(encoded, sizeof(encoded)+1);
         rf95.waitPacketSent();
-        Serial.print("Send");
+        Serial.print("== SEND:  ");
+        Serial.print("DATA ARDUINO   ");
+        Serial.print("  |  Encoded: ");
+        Serial.println((char*)encoded);
       }
       digitalWrite(LED, LOW);
     }
