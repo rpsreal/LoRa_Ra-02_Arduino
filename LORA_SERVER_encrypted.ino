@@ -5,8 +5,10 @@
 // Based on example LoRa 9x_TX RADIOHEAD library
 // It is designed to work with LORA_CLIENT
 
-#include <SPI.h>
-#include <RH_RF95.h>
+#include <SPI.h>      // SPI
+#include <RH_RF95.h>  // HadioHead http://www.airspayce.com/mikem/arduino/RadioHead/
+#include <Base64.h> // https://github.com/adamvr/arduino-base64
+#include <AESLib.h> // https://github.com/DavyLandman/AESLib
 
 #define RFM95_CS 10
 #define RFM95_RST 9
@@ -56,27 +58,52 @@ void setup()
 }
 
 int8_t send_ack=0; // flag var
+uint8_t key[] = "1234567890123456";
 
 void loop()
 {
 
   while (send_ack==0){
     digitalWrite(LED, HIGH);
-    Serial.println("Send: INF");
-    char radiopacket[4] = "INF";
-    rf95.send((uint8_t *)radiopacket, 4);
-    delay(10);
+    
+    uint8_t input[] = "INF             "; // 16 char
+       
+    aes128_enc_single(key, input);
+
+    uint8_t  inputLen = sizeof(input);
+    uint8_t  encodedLen = base64_enc_len(inputLen);
+    uint8_t  encoded[encodedLen];
+    base64_encode((char*)encoded, (char*)input, inputLen);
+
+    rf95.send(encoded, sizeof(encoded)+1);
     rf95.waitPacketSent();
+    Serial.print("== SEND:  ");
+    Serial.print("INF             ");
+    Serial.print("  |  Encoded: ");
+    Serial.println((char*)encoded);
 
     uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
     uint8_t len = sizeof(buf);
-    if (rf95.waitAvailableTimeout(10000)){ 
+    if (rf95.waitAvailableTimeout(10000)){
       if (rf95.recv(buf, &len)){
-         Serial.print("Receive: ");
-         Serial.println((char*)buf);
-         send_ack=1;
-         //Serial.print("RSSI: ");
-         //Serial.println(rf95.lastRssi(), DEC);    
+        
+          //RH_RF95::printBuffer("Got: ", buf, len);
+          //Serial.print("RSSI: ");
+          //Serial.println(rf95.lastRssi(), DEC);
+          Serial.print("== RECEIVED:  ");
+          Serial.print((char*)buf);
+
+          uint8_t bufLen = sizeof(buf);
+          uint8_t decodedLen = base64_dec_len((char*)buf, bufLen);
+          uint8_t data_de[decodedLen];
+          base64_decode((char*)data_de, (char*)buf, bufLen);
+
+          aes128_dec_single(key, data_de);
+          Serial.print("  |  Decoded: ");
+          Serial.println((char*)data_de);
+
+          send_ack=1;
+        
       }else{
          Serial.println("Receive failed");
       }
@@ -87,13 +114,25 @@ void loop()
   
   if(send_ack==1){ //Send: ACK
     delay(1000);
-    Serial.println("Send: ACK");
-    char radiopacket[4] = "ACK";
-    rf95.send((uint8_t *)radiopacket,4);
-    delay(10);
+    
+    uint8_t input[] = "ACK             "; // 16 char
+       
+    aes128_enc_single(key, input);
+
+    uint8_t  inputLen = sizeof(input);
+    uint8_t  encodedLen = base64_enc_len(inputLen);
+    uint8_t  encoded[encodedLen];
+    base64_encode((char*)encoded, (char*)input, inputLen);
+
+    rf95.send(encoded, sizeof(encoded)+1);
     rf95.waitPacketSent();
+    Serial.print("== SEND:  ");
+    Serial.print("ACK             ");
+    Serial.print("  |  Encoded: ");
+    Serial.println((char*)encoded);  
+    
     send_ack=0;
   }
   digitalWrite(LED, LOW);
-  delay(10000);
+  delay(10000); // send new packet every 10 seconds
 }
