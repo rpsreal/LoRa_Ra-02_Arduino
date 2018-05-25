@@ -67,7 +67,7 @@ void loop()
     digitalWrite(LED, HIGH);
     
     uint8_t input[] = "INF             "; // 16 char
-       
+
     aes128_enc_single(key, input);
 
     uint8_t  inputLen = sizeof(input);
