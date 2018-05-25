@@ -129,7 +129,8 @@ void loop()
     Serial.print("== SEND:  ");
     Serial.print("ACK             ");
     Serial.print("  |  Encoded: ");
-    Serial.println((char*)encoded);  
+    Serial.println((char*)encoded);
+    Serial.println("\n");
     
     send_ack=0;
   }
