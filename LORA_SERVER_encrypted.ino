@@ -3,7 +3,7 @@
 // Copyright 2018 Rui Silva.
 // This file is part of rpsreal/LoRa_Ra-02_Arduino
 // Based on example LoRa 9x_TX RADIOHEAD library
-// It is designed to work with LORA_CLIENT
+// It is designed to work with LORA_CLIENT_encrypted.ino
 
 #include <SPI.h>      // SPI
 #include <RH_RF95.h>  // HadioHead http://www.airspayce.com/mikem/arduino/RadioHead/
