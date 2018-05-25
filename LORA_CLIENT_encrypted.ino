@@ -92,10 +92,8 @@ void loop()
         Serial.println("Received data request INF - going to send mens:DATA ARDUINO   ");
         delay(2000);
 
-        uint8_t input[] = "DATA ARDUINO   ";
-       
+        uint8_t input[] = "DATA ARDUINO    "; // 16 char 
         aes128_enc_single(key, input);
-
         uint8_t  inputLen = sizeof(input);
         uint8_t  encodedLen = base64_enc_len(inputLen);
         uint8_t  encoded[encodedLen];
@@ -107,11 +105,11 @@ void loop()
         Serial.print("DATA ARDUINO   ");
         Serial.print("  |  Encoded: ");
         Serial.println((char*)encoded);
+      }else if (strcmp("ACK             ",((char*)data_de)) == 0){
+        Serial.println("\n");
       }
-      digitalWrite(LED, LOW);
-    }
-    else
-    {
+        digitalWrite(LED, LOW);
+    }else{
       Serial.println("Receive failed");
     }
   }
