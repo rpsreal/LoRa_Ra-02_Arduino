@@ -1,15 +1,12 @@
 // This program sends a response whenever it receives the "INF" mens
 //
-// Arduino9x_RX
-// -*- mode: C++ -*-
-// Example sketch showing how to create a simple messaging client (receiver)
-// with the RH_RF95 class. RH_RF95 class does not provide for addressing or
-// reliability, so you should only use RH_RF95 if you do not need the higher
-// level messaging abilities.
-// It is designed to work with the other example Arduino9x_TX
+// Copyright 2018 Rui Silva.
+// This file is part of rpsreal/LoRa_Ra-02_Arduino
+// Based on example LoRa 9x_RX RADIOHEAD library
+// It is designed to work with LORA_SERVER_encrypted in Arduino or Raspberry Pi
 
 #include <SPI.h>      // SPI
-#include <RH_RF95.h>  // HadioHead
+#include <RH_RF95.h>  //HadioHead http://www.airspayce.com/mikem/arduino/RadioHead/
 #include <Base64.h> // https://github.com/adamvr/arduino-base64
 #include <AESLib.h> // https://github.com/DavyLandman/AESLib
 
