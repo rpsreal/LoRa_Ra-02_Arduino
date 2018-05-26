@@ -15,8 +15,24 @@ AI-Thinker module Ra-02:
 Arduino boad or compatible
  - This boad is 3,3V level and not 5V so to use Arduino Uno or Arduino Pro Mini 5V you have to use a Bi-Directional Logic Level Converter.
 
+# Setup
+
  Wiring example with Arduino Pro Mini 3,3V 8MHz
 	
  ![wiring_img](./wiring.png)
+ 
+ 
+* 1º Install the [RadioHead library](http://www.airspayce.com/mikem/arduino/RadioHead/) in the Arduino IDE
+*	For the encrypted versions:
+*	1.1º Install the [Base64 library](https://github.com/adamvr/arduino-base64)
+*	1.2º Install the [AESLib library](https://github.com/DavyLandman/AESLib)
+* 2º Download and run the LORA_CLIENT to the Arduino IDE or [Raspberry Pi](https://github.com/rpsreal/pySX127x).
+* 3º Download and run the LORA_SERVER to the Arduino IDE or [Raspberry Pi](https://github.com/rpsreal/pySX127x).
+ 
+ 
+ LORA_CLIENT_encrypted
+  ![serial_client_img](./serial_client.png)
+ LORA_SERVER_encrypted
+  ![serial_server_img](./serial_server.png)
  
  Developed by Rui Silva, Porto, Portugal
