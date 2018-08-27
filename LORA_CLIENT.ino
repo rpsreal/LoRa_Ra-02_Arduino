@@ -48,12 +48,23 @@ void setup()
     while (1);
   }
 
-  // Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
-
   // The default transmitter power is 13dBm, using PA_BOOST.
   // If you are using RFM95/96/97/98 modules which uses the PA_BOOST transmitter pin, then 
   // you can set transmitter powers from 5 to 23 dBm:
-  rf95.setTxPower(23, false);
+
+  
+  // Bw = 125 kHz, Cr = 4/8, Sf = 4096chips/symbol, CRC on. 
+  // Slow+long range. 
+  //rf95.setModemConfig(RH_RF95::Bw125Cr48Sf4096);
+
+  
+  // Defaults after init are 434.0MHz, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
+  // Medium Range
+  
+  rf95.setTxPower(18);
+
+
+  
   Serial.println("START");
 }
     
@@ -69,8 +80,8 @@ void loop()
       //RH_RF95::printBuffer("Got: ", buf, len);
       Serial.print("Received:  ");
       Serial.println((char*)buf);
-      //Serial.print("RSSI: ");
-      //Serial.println(rf95.lastRssi(), DEC);
+      Serial.print("RSSI: ");
+      Serial.println(rf95.lastRssi(), DEC);
       if (strcmp("INF",((char*)buf)) == 0){
         Serial.println("Received data request INF");
         delay(2000);
