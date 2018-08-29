@@ -57,7 +57,7 @@ void setup()
   
   // Bw = 125 kHz, Cr = 4/8, Sf = 4096chips/symbol, CRC on. 
   // Slow+long range. 
-  //rf95.setModemConfig(RH_RF95::Bw125Cr48Sf4096);
+  rf95.setModemConfig(RH_RF95::Bw125Cr48Sf4096);
 
   
   // Defaults after init are 434.0MHz, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
