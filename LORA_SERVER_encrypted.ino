@@ -121,7 +121,7 @@ void loop()
    }
   
   if(send_ack==1){ //Send: ACK
-    delay(1000);
+    delay(2000);
     
     uint8_t input[] = "ACK             "; // 16 char
        
