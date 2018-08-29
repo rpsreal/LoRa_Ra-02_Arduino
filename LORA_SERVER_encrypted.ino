@@ -78,12 +78,12 @@ void loop()
 
     aes128_enc_single(key, input);
 
-    uint8_t  inputLen = sizeof(input);
+    uint8_t  inputLen = sizeof(input)-1;
     uint8_t  encodedLen = base64_enc_len(inputLen);
-    uint8_t  encoded[encodedLen];
+    uint8_t  encoded[encodedLen-1];
     base64_encode((char*)encoded, (char*)input, inputLen);
 
-    rf95.send(encoded, sizeof(encoded)+1);
+    rf95.send(encoded, sizeof(encoded));
     rf95.waitPacketSent();
     Serial.print("== SEND:  ");
     Serial.print("INF             ");
@@ -127,12 +127,12 @@ void loop()
        
     aes128_enc_single(key, input);
 
-    uint8_t  inputLen = sizeof(input);
+    uint8_t  inputLen = sizeof(input)-1;
     uint8_t  encodedLen = base64_enc_len(inputLen);
-    uint8_t  encoded[encodedLen];
+    uint8_t  encoded[encodedLen+1];
     base64_encode((char*)encoded, (char*)input, inputLen);
 
-    rf95.send(encoded, sizeof(encoded)+1);
+    rf95.send(encoded, sizeof(encoded));
     rf95.waitPacketSent();
     Serial.print("== SEND:  ");
     Serial.print("ACK             ");
