@@ -80,7 +80,7 @@ void loop()
 
     uint8_t  inputLen = sizeof(input)-1;
     uint8_t  encodedLen = base64_enc_len(inputLen);
-    uint8_t  encoded[encodedLen-1];
+    uint8_t  encoded[encodedLen+1];
     base64_encode((char*)encoded, (char*)input, inputLen);
 
     rf95.send(encoded, sizeof(encoded));
