@@ -18,7 +18,7 @@ Arduino boad or compatible
 # Setup
 
  Wiring example with Arduino Pro Mini 3,3V 8MHz
-	
+# Images need updating	
  ![wiring_img](./wiring.png)
  
  
@@ -29,7 +29,7 @@ Arduino boad or compatible
 * 2º Download and run the LORA_CLIENT to the Arduino IDE or [Raspberry Pi](https://github.com/rpsreal/pySX127x).
 * 3º Download and run the LORA_SERVER to the Arduino IDE or [Raspberry Pi](https://github.com/rpsreal/pySX127x).
  
- 
+ # Images need updating
  LORA_SERVER_encrypted
   ![serial_server_img](./serial_server.png)
  LORA_CLIENT_encrypted
