@@ -15,6 +15,8 @@ AI-Thinker module Ra-02:
 Arduino boad or compatible
  - This boad is 3,3V level and not 5V so to use Arduino Uno or Arduino Pro Mini 5V you have to use a Bi-Directional Logic Level Converter.
 
+ Note: These examples can be used with the RFM95 module but it is necessary to change the frequency in the files.
+
 # Setup
 
  Wiring example with Arduino Pro Mini 3,3V 8MHz
